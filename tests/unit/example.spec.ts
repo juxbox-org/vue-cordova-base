@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import App from '@/App.vue';
 import { initVue, cleanupVue, mount } from './helpers/vue-tests-helper';
 
-
 describe('App.vue', () => {
   before(() => {
     initVue();

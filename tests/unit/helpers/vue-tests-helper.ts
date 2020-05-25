@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue, { VueConstructor } from 'vue';
 import Vuetify from 'vuetify';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
@@ -24,9 +24,13 @@ const defaultStore = {
   },
 };
 
-let localVue = null;
+let localVue: VueConstructor<Vue>;
 
 function initVue() {
+  if (localVue) {
+    throw Error('ERROR: Vue has already been initialized');
+  }
+
   localVue = createLocalVue();
   localVue.use(Vuex);
   localVue.use(VueRouter);
@@ -34,7 +38,7 @@ function initVue() {
   return localVue;
 }
 
-function mount(component, { store = null } = {}) {
+function mount(component: object, config: { store: object } = { store: null }) {
   if (!localVue) {
     throw Error('ERROR: Vue has not been initialized');
   }
@@ -42,12 +46,12 @@ function mount(component, { store = null } = {}) {
   return _mount(component, {
     vuetify: new Vuetify(),
     router: new VueRouter(),
-    store: new Vuex.Store(store || defaultStore),
+    store: new Vuex.Store(config.store || defaultStore),
     localVue,
   });
 }
 
-function shallowMount(component, { store = null } = {}) {
+function shallowMount(component: object, config: { store: object } = { store: null }) {
   if (!localVue) {
     throw Error('ERROR: Vue has not been initialized');
   }
@@ -55,7 +59,7 @@ function shallowMount(component, { store = null } = {}) {
   return _shallowMount(component, {
     vuetify: new Vuetify(),
     router: new VueRouter(),
-    store: new Vuex.Store(store || defaultStore),
+    store: new Vuex.Store(config.store || defaultStore),
     localVue,
   });
 }
