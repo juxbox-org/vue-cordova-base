@@ -1,18 +1,25 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<template lang="pug">
+  div
+    v-btn(@click="onClick") Test Cordova
+    div Platform: {{platformId}}
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+<script lang="ts">
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   name: 'Home',
-  components: {
-    HelloWorld,
+
+  data() {
+    return {
+      platformId: '' as string,
+    };
   },
-};
+
+  methods: {
+    onClick(): void {
+      this.platformId = this.$cordova.platformId;
+    },
+  },
+});
 </script>

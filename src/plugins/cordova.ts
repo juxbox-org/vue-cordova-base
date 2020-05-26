@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import VueCordova from 'vue-cordova';
+import CordovaPlugin from '@/plugins/cordova/CordovaPlugin';
 
-// Add Vue wrapper for Cordova plugins
-Vue.use(VueCordova);
+Vue.use(CordovaPlugin);
